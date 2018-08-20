@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
     <Button
         android:id="@+id/request_network"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="请求网络"
-        app:layout_constraintEnd_toStartOf="@id/finish_activity"
+        app:layout_constraintEnd_toStartOf="@id/to_fragment"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/finish_activity"
+        android:id="@+id/to_fragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="关闭界面"
+        android:text="跳转到fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/request_network" />
 

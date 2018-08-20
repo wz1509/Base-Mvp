@@ -1,22 +1,25 @@
 package com.wazing.mvp.presenter
 
+import com.wazing.mvp.base.BasePresenter
 import com.wazing.mvp.contract.MainContract
-import com.wazing.mvp.entity.HomeEntity
-import com.wazing.mvp.model.MainModel
 import com.wazing.mvp.model.callback.ResultCallBack
+import javax.inject.Inject
 
-class MainPresenter : BasePresenter<MainContract.Model, MainContract.View>(), MainContract.Presenter {
+class MainPresenter @Inject constructor(
+        private var model: MainContract.Model, private var view: MainContract.View
+) : BasePresenter(view, model), MainContract.Presenter {
 
-    override fun createModel(): MainContract.Model = MainModel()
-
-    override fun getHomeList(pageSize: Int) {
-        model?.getHomeList(pageSize, object : ResultCallBack.SimpleResultCallBack<HomeEntity>() {
-            override fun onSuccess(data: HomeEntity) {
-                view?.onHomeList(data)
+    override fun getToday() {
+        view.showLoading()
+        model.getToday(object : ResultCallBack.SimpleResultCallBack<String>() {
+            override fun onSuccess(data: String) {
+                view.onResult(data)
+                view.hideLoading()
             }
 
             override fun onFail(errorMsg: String) {
-                view?.onApiFail(errorMsg)
+                view.onApiFail(errorMsg)
+                view.hideLoading()
             }
         })
     }

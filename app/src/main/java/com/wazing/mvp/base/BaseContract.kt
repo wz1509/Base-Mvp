@@ -1,4 +1,4 @@
-package com.wazing.mvp.contract
+package com.wazing.mvp.base
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
@@ -25,9 +25,7 @@ interface BaseContract {
     /**
      * Presenter通用方法
      */
-    interface Presenter<in V : View> : LifecycleObserver {
-
-        fun attachView(view: V)
+    interface Presenter: LifecycleObserver {
 
         @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         fun detachView()

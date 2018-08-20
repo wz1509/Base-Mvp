@@ -1,7 +1,7 @@
 package com.wazing.mvp.model.network
 
 import android.text.TextUtils
-import com.wazing.mvp.entity.BaseResult
+import com.wazing.mvp.base.BaseResult
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.Observer

@@ -1,8 +1,6 @@
-package com.wazing.mvp.model
+package com.wazing.mvp.base
 
-import android.util.Log
-import com.wazing.mvp.contract.BaseContract
-import com.wazing.mvp.model.network.ApiManager
+import com.wazing.mvp.application.AppApplication
 import com.wazing.mvp.model.network.ApiService
 import io.reactivex.disposables.CompositeDisposable
 
@@ -13,11 +11,8 @@ abstract class BaseModel : BaseContract.Model {
     }
 
     val apiService: ApiService by lazy(LazyThreadSafetyMode.NONE) {
-        ApiManager.instance.create(ApiService::class.java)
+        AppApplication.appApplication.applicationComponent.getApiService()
     }
 
-    override fun onDestroy() {
-        Log.d("zz","BaseModel onDestroy()")
-        disposables.clear()
-    }
+    override fun onDestroy() = disposables.clear()
 }

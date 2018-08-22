@@ -6,19 +6,10 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class ViewModule {
-
-    private var mainView: MainContract.View? = null
-
-    private var categoryView: CategoryContract.View? = null
-
-    constructor(mainView: MainContract.View) {
-        this.mainView = mainView
-    }
-
-    constructor(categoryView: CategoryContract.View) {
-        this.categoryView = categoryView
-    }
+class ViewModule @JvmOverloads constructor(
+        private val mainView: MainContract.View? = null,
+        private val categoryView: CategoryContract.View? = null
+) {
 
     @Provides
     fun provideMainView() = mainView!!

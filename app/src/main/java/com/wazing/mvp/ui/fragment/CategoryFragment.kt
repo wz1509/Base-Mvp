@@ -19,7 +19,7 @@ class CategoryFragment : BaseMvpFragment<CategoryPresenter>(), CategoryContract.
     }
 
     override fun injectPresenter() {
-        getFragmentComponent(ViewModule(this))
+        getFragmentComponent(ViewModule(categoryView = this))
                 .inject(this)
     }
 

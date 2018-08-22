@@ -25,7 +25,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.View {
     }
 
     override fun injectPresenter() {
-        getActivityComponent(ViewModule(this))
+        getActivityComponent(ViewModule(mainView = this))
                 .inject(this)
     }
 

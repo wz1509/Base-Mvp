@@ -21,5 +21,6 @@ interface AppComponent {
 
     fun getRetrofit(): Retrofit
 
+
     fun getApiService(): ApiService
 }

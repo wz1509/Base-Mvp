@@ -2,32 +2,39 @@ package com.wazing.mvp.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.wazing.mvp.R
-import com.wazing.mvp.base.BaseMvpFragment
+import com.wazing.mvp.R.id.content_text
+import com.wazing.mvp.base.BaseFragment
 import com.wazing.mvp.contract.CategoryContract
-import com.wazing.mvp.di.module.ViewModule
 import com.wazing.mvp.presenter.CategoryPresenter
-import kotlinx.android.synthetic.main.fragment_category.*
+import javax.inject.Inject
 
-class CategoryFragment : BaseMvpFragment<CategoryPresenter>(), CategoryContract.View {
+class CategoryFragment : BaseFragment(), CategoryContract.View {
+
+    @Inject
+    lateinit var presenter: CategoryPresenter
+
+    private lateinit var contentText: TextView
 
     override fun getContentViewResId(): Int = R.layout.fragment_category
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // 注册
+        lifecycle.addObserver(presenter)
+
+        contentText = view.findViewById(R.id.content_text)
+
         presenter.getGankList("Android", 5, 1)
     }
 
-    override fun injectPresenter() {
-        getFragmentComponent(ViewModule(categoryView = this))
-                .inject(this)
-    }
-
     override fun onResult(result: String) {
-        content_text.text = result
+        contentText.text = result
     }
 
     override fun onApiFail(msg: String) {
-        content_text.text = msg
+        contentText.text = msg
     }
 }

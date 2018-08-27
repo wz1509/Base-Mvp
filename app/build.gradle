@@ -44,6 +44,7 @@ dependencies {
     // dagger2
     def dagger2Version = '2.16'
     implementation "com.google.dagger:dagger:$dagger2Version"
+    implementation "com.google.dagger:dagger-android-support:$dagger2Version" // if you use the support libraries
+    kapt "com.google.dagger:dagger-android-processor:$dagger2Version"
     kapt "com.google.dagger:dagger-compiler:$dagger2Version"
-    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
 }

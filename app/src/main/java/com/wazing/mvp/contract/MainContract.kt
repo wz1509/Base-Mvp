@@ -10,10 +10,7 @@ interface MainContract {
         fun onResult(result: String)
     }
 
-    /**
-     * 如果后面继承了BasePresenter，这里就不需要重复继承 BaseContract.Presenter
-     */
-    interface Presenter {
+    interface Presenter : BaseContract.Presenter {
 
         fun getToday()
     }

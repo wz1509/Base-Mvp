@@ -1,14 +1,22 @@
 package com.wazing.mvp.di.module
 
-import android.app.Activity
-import com.wazing.mvp.di.ActivityScope
+import com.wazing.mvp.di.scope.ActivityScope
+import com.wazing.mvp.di.module.activity.MainActivityModule
+import com.wazing.mvp.di.module.fragment.FrameActivityProvider
+import com.wazing.mvp.ui.activity.FrameActivity
+import com.wazing.mvp.ui.activity.MainActivity
 import dagger.Module
-import dagger.Provides
+import dagger.android.ContributesAndroidInjector
 
 @Module
-class ActivityModule(private val activity: Activity) {
+abstract class ActivityModule {
 
-    @Provides
     @ActivityScope
-    fun provideActivity(): Activity = activity
+    @ContributesAndroidInjector(modules = [MainActivityModule::class])
+    abstract fun bindMainActivitytInjector(): MainActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [FrameActivityProvider::class])
+    abstract fun bindFrameActivitytInjector(): FrameActivity
+
 }

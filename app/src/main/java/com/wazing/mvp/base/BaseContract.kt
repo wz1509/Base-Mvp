@@ -15,10 +15,6 @@ interface BaseContract {
      */
     interface View {
 
-        fun showLoading()
-
-        fun hideLoading()
-
         fun onApiFail(msg: String)
     }
 

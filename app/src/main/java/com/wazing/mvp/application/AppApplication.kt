@@ -1,25 +1,35 @@
 package com.wazing.mvp.application
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
-import com.wazing.mvp.di.component.ApplicationComponent
-import com.wazing.mvp.di.component.DaggerApplicationComponent
-import com.wazing.mvp.di.module.ApplicationModule
-import com.wazing.mvp.di.module.NetModule
+import com.wazing.mvp.di.component.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.HasActivityInjector
+import dagger.android.DispatchingAndroidInjector
+import javax.inject.Inject
 
-class AppApplication : Application() {
 
-    val applicationComponent: ApplicationComponent by lazy {
-        DaggerApplicationComponent.builder()
-                .applicationModule(ApplicationModule(this))
-                .netModule(NetModule())
-                .build()
-    }
+class AppApplication : Application(), HasActivityInjector {
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+
+//    val mAppComponent: AppComponent by lazy {
+//        DaggerApp.builder()
+//                .applicationModule(AppModule(this))
+//                .netModule(NetModule())
+//                .build()
+//    }
 
     override fun onCreate() {
         super.onCreate()
+        DaggerAppComponent.create().inject(this)
+
         appApplication = this
     }
+
+    override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
 
     companion object Factory {
 

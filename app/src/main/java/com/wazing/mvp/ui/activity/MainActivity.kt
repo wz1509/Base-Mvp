@@ -2,39 +2,46 @@ package com.wazing.mvp.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import com.wazing.mvp.R
-import com.wazing.mvp.base.BaseMvpActivity
+import com.wazing.mvp.R.id.*
+import com.wazing.mvp.base.BaseActivity
 import com.wazing.mvp.contract.MainContract
-import com.wazing.mvp.di.module.ViewModule
 import com.wazing.mvp.presenter.MainPresenter
-import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class MainActivity : BaseMvpActivity<MainPresenter>(), MainContract.View {
+class MainActivity : BaseActivity(), MainContract.View {
+
+    @Inject
+    lateinit var presenter: MainPresenter
+
+    private lateinit var contentText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        request_network.setOnClickListener {
+        lifecycle.addObserver(presenter)
+
+        contentText = findViewById(R.id.content_text)
+
+        findViewById<View>(R.id.request_network).setOnClickListener {
             presenter.getToday()
         }
-        to_fragment.setOnClickListener {
+
+        findViewById<View>(R.id.to_fragment).setOnClickListener {
             // this.finish()
             startActivity(Intent(this@MainActivity, FrameActivity::class.java))
         }
     }
 
-    override fun injectPresenter() {
-        getActivityComponent(ViewModule(mainView = this))
-                .inject(this)
-    }
-
     override fun onResult(result: String) {
-        content_text.text = result
+        contentText.text = result
     }
 
     override fun onApiFail(msg: String) {
-        content_text.text = msg
+        contentText.text = msg
     }
 
 }

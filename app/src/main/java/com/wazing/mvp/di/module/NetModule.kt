@@ -1,6 +1,7 @@
 package com.wazing.mvp.di.module
 
 import com.wazing.mvp.BuildConfig
+import com.wazing.mvp.model.network.ApiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -34,7 +35,6 @@ class NetModule {
                 .build()
     }
 
-    @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
@@ -43,6 +43,11 @@ class NetModule {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
+    }
+
+    @Provides
+    fun provideApiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
     }
 
 }
